@@ -1,16 +1,26 @@
 from Crypto.Cipher import AES
+from Crypto.Cipher import DES
 #key = "aaaabbbbccccdddd"
-key = "zapatitosblancos"
-cipher = AES.new(key)
+# key = "zapatitosblancos"
+# cipher = AES.new(key)
+
+# key = b'zapat0te'
+# cipher = DES.new(key=key, mode=DES.MODE_ECB)
 
 x = True
 
 while x:
     opc = int(input("Que desea hacer, (1)Cifrar; (2)Decifrar, (3)Salir: "))
-
     if opc==1:
-        with open("corazon.bmp", "rb") as f:
-          clear = f.read()
+        filename = input("Filename: ")
+        input_key = input("Key (8 bytes): ")
+        output_file = input("Output filename: ")
+
+        key = bytes(input_key, "utf-8")
+        cipher = DES.new(key=key, mode=DES.MODE_ECB)
+
+        with open(filename, "rb") as f:
+            clear = f.read()
         
         mod = len(clear)%16
 
@@ -20,12 +30,19 @@ while x:
 
         ciphertext = clear[0:64] + ciphertext + clear[-mod:]
 
-        with open("corazon_ecb.bmp", "wb") as f:
-          f.write(ciphertext)
+        with open(output_file, "wb") as f:
+            f.write(ciphertext)
 
     if opc==2:
-        with open("corazon_ecb.bmp", "rb") as f:
-          clear = f.read()
+        filename = input("Filename: ")
+        input_key = input("Key (8 bytes): ")
+        output_file = input("Output filename: ")
+
+        key = bytes(input_key, "utf-8")
+        cipher = DES.new(key=key, mode=DES.MODE_ECB)
+
+        with open(filename, "rb") as f:
+            clear = f.read()
 
         mod = len(clear)%16
 
@@ -35,8 +52,8 @@ while x:
 
         ciphertext = clear[0:64] + ciphertext + clear[-mod:]
 
-        with open("corazon_ecb1.bmp", "wb") as f:
-          f.write(ciphertext)
+        with open(output_file, "wb") as f:
+            f.write(ciphertext)
 
     if opc==3:
         x = False
