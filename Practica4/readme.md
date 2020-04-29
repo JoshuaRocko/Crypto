@@ -9,5 +9,5 @@ sudo apt-get install python3-tk
 #### Install PyCryptodome
 
 ```sh
-pip3 install pycryptodome
+pip3 install pycryptodomex
 ```
